@@ -114,17 +114,14 @@ istream &operator>>(istream &istr, TSet &s) // ввод
     char tmp;
     for (size_t i = 0; i < s.GetMaxPower(); i++) {
         istr >> tmp;
-        if (tmp < s.GetMaxPower() && s.IsMember(tmp) == 0)
-            s.InsElem(tmp);
     }
     return istr;
 }
 
 ostream& operator<<(ostream &ostr, const TSet &s) // вывод
 {
-    for (size_t i = 0; i < s.GetMaxPower(); i++)
-        if (s.IsMember(i)==1)
-            ostr << '1';
-        else ostr << '0';
+    for (size_t i = 0; i < s.GetMaxPower(); i++) {
+        ostr << i;
+    }
     return ostr;
 }

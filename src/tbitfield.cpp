@@ -86,11 +86,11 @@ TBitField& TBitField::operator=(const TBitField &bf) // присваивание
 	if (this->MemLen != bf.MemLen)
 	{
 		MemLen = bf.MemLen;
+		TELEM* tmp = new TELEM[bf.MemLen];
 		delete[]pMem;
-		pMem = new TELEM[MemLen];
+		pMem = tmp;
 	}
-	pMem = new TELEM[BitLen];
-	for (size_t i = 0; i < this->MemLen; i++) {
+	for (size_t i = 0; i < bf.MemLen; i++) {
 		this->pMem[i] = bf.pMem[i];
 	}
 
@@ -154,7 +154,8 @@ istream &operator>>(istream &istr, TBitField &bf) // ввод
 	for (size_t i = 0; i < bf.GetLength(); i++)
 	{
 		istr >> tmp;
-		if (tmp==1) bf.SetBit(i);
+		if (tmp == '1') bf.SetBit(i);
+		if (tmp == '0') bf.ClrBit(i);
 	}
 	return istr;
 
@@ -162,8 +163,7 @@ istream &operator>>(istream &istr, TBitField &bf) // ввод
 
 ostream& operator<<(ostream& ostr, const TBitField& bf) // вывод
 {
-	size_t len = bf.GetLength();
-	for (size_t i = 0; i < len; i++) {
+	for (size_t i = 0; i < bf.GetLength(); i++) {
 		if (bf.GetBit(i) == 1) ostr << '1';
 		else ostr << '0';
 	}
